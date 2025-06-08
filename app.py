@@ -10,7 +10,7 @@ CSE_ID = st.secrets["CSE_ID"]
 
 # --- Configure Gemini ---
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-2.0-flash-001")
+model = genai.GenerativeModel("gemini-1.5-flash-002")
 
 # --- Google Search Helper ---
 def google_search(query, api_key, cse_id, num_results=3):
