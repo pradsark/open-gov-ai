@@ -10,7 +10,7 @@ CSE_ID = st.secrets["CSE_ID"]
 
 # --- Configure Gemini ---
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-1.5-flash-002")
+model = genai.GenerativeModel("gemini-2.0-flash-001")
 
 # --- Google Search Helper ---
 def google_search(query, api_key, cse_id, num_results=3):
@@ -45,11 +45,11 @@ def get_answer(user_question):
 # --- Streamlit UI ---
 st.set_page_config(page_title="OpenGovAI", layout="centered")
 st.title("OpenGovAI 🇮🇳")
-st.subheader("Ask about Government Schemes")
+st.subheader("All about Government Schemes")
 
 question = st.text_input(" Enter your question")
 if st.button("Get Answer") and question:
     with st.spinner("Analyzing your query..."):
         answer = get_answer(question)
-        st.markdown("### Gemini's Response")
+        st.markdown("### Results")
         st.markdown(answer)
