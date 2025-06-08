@@ -1,21 +1,20 @@
 # OpenGovAI: An AI Agent for Citizen Queries on Government Schemes
-# Streamlit App Version with Hyperlink Target + Chatbot UI
 
 import streamlit as st
 import google.generativeai as genai
 import requests
 import os
 
-# --- Setup keys from Streamlit secrets ---
+# Setup keys from Streamlit secrets
 GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 CSE_ID = st.secrets["CSE_ID"]
 
-# --- Configure Gemini ---
+# Configure Gemini
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash-001")
 
-# --- Google Search Helper ---
+# Google Search Helper
 def google_search(query, api_key, cse_id, num_results=10):
     url = f"https://www.googleapis.com/customsearch/v1?q={query}&key={api_key}&cx={cse_id}&num={num_results}"
     response = requests.get(url)
@@ -30,9 +29,9 @@ def google_search(query, api_key, cse_id, num_results=10):
             snippets.append(f"<a href='{link}' target='_blank'>{title}</a>: {snippet}")
     return "<br><br>".join(snippets)
 
-# --- Answer Generator ---
+# Answer Generator
 def get_answer(user_question):
-    # Smarter query generation
+    # Smart query generation
     search_prompt = f"""
     You are helping users find government scheme details like eligibility, launch year, and benefits.
 
@@ -69,7 +68,7 @@ def get_answer(user_question):
     response = model.generate_content(synthesis_prompt)
     return response.text.strip()
 
-# --- Streamlit Chatbot-style UI ---
+# Streamlit Chatbot-style UI
 st.set_page_config(page_title="OpenGovAI", layout="centered")
 st.title("OpenGovAI 🇮🇳")
 st.subheader("Ask anything about Government Schemes")
